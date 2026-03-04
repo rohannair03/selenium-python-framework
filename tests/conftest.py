@@ -10,9 +10,9 @@ def setUp():
 
 
 @pytest.fixture(scope="class")
-def oneTimeSetUp(request, browser):
+def oneTimeSetUp(request, browser, headless):
     print("Running one time setUp")
-    wdf = WebDriverFactory(browser)
+    wdf = WebDriverFactory(browser, headless=headless)
     driver = wdf.getWebDriverInstance()
     lp = LoginPage(driver)
     lp.login("test@email.com", "abcabc")
