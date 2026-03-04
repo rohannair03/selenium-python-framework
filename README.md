@@ -174,7 +174,7 @@ The implementation reflects production-oriented automation practices rather than
 
 ## Potential Enhancements
 
-- CI integration (GitHub Actions)
+- ~~CI integration (GitHub Actions)~~
 - Parallel execution with pytest-xdist
 - Structured reporting (Allure / HTML reports)
 - Remote execution (Selenium Grid)
