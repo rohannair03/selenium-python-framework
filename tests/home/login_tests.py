@@ -13,6 +13,7 @@ class LoginTests(unittest.TestCase):
 
     @pytest.mark.run(order=2)
     def test_validLogin(self):
+        self.lp.logout()
         self.lp.login(email="test@email.com", password="abcabc")
         result1 = self.lp.verifyLoginTitle()
         self.test_status.mark(result1, "Title is incorrect")
