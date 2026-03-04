@@ -1,5 +1,6 @@
 
 # Selenium Python Automation Framework
+![Selenium Tests](https://github.com/rohannair03/selenium-python-framework/actions/workflows/tests.yml/badge.svg)
 
 ## Overview
 
