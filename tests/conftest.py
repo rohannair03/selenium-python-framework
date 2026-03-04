@@ -25,11 +25,12 @@ def oneTimeSetUp(request, browser):
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome")
+    parser.addoption("--headless", action="store_true", default=False)
 
 @pytest.fixture(scope="session")
 def browser(request):
     return request.config.getoption("--browser")
 
 @pytest.fixture(scope="session")
-def osType(request):
-    return request.config.getoption("--osType")
+def headless(request):
+    return request.config.getoption("--headless")

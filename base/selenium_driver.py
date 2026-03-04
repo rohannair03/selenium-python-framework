@@ -31,8 +31,8 @@ class SeleniumDriver():
                 os.makedirs(destinationDirectory)
             self.driver.save_screenshot(destinationFile)
             self.log.info("Screenshot save to directory: " + destinationFile)
-        except:
-            self.log.error("### Exception Occurred when taking screenshot")
+        except Exception as e:
+            self.log.error("### Exception Occurred when taking screenshot" + str(e))
             print_stack()
 
     def getTitle(self):
@@ -65,9 +65,9 @@ class SeleniumDriver():
             element = self.driver.find_element(byType, locator)
             self.log.info("Element found with locator: " + locator +
                           " and  locatorType: " + locatorType)
-        except:
+        except Exception as e:
             self.log.info("Element not found with locator: " + locator +
-                          " and  locatorType: " + locatorType)
+                          " and  locatorType: " + locatorType + " | Error: " + str(e))
         return element
 
     def getElementList(self, locator, locatorType="xpath"):
@@ -82,9 +82,9 @@ class SeleniumDriver():
             element = self.driver.find_elements(byType, locator)
             self.log.info("Element list found with locator: " + locator +
                           " and  locatorType: " + locatorType)
-        except:
+        except Exception as e:
             self.log.info("Element list not found with locator: " + locator +
-                          " and  locatorType: " + locatorType)
+                          " and  locatorType: " + locatorType + " | Error: " + str(e))
         return element
 
     def elementClick(self, locator="", locatorType="xpath", element=None):
@@ -98,9 +98,9 @@ class SeleniumDriver():
             element.click()
             self.log.info("Clicked on element with locator: " + locator +
                           " locatorType: " + locatorType)
-        except:
+        except Exception as e:
             self.log.info("Cannot click on the element with locator: " + locator +
-                          " locatorType: " + locatorType)
+                          " locatorType: " + locatorType + " | Error: " + str(e))
             print_stack()
 
     def sendKeys(self, data, locator="", locatorType="xpath", element=None):
@@ -114,9 +114,9 @@ class SeleniumDriver():
             element.send_keys(data)
             self.log.info("Sent data on element with locator: " + locator +
                           " locatorType: " + locatorType)
-        except:
+        except Exception as e:
             self.log.info("Cannot send data on the element with locator: " + locator +
-                  " locatorType: " + locatorType)
+                  " locatorType: " + locatorType  + " | Error: " + str(e))
             print_stack()
 
     def getText(self, locator="", locatorType="xpath", element=None, info=""):
@@ -138,8 +138,8 @@ class SeleniumDriver():
                 self.log.info("Getting text on element :: " +  info)
                 self.log.info("The text is :: '" + text + "'")
                 text = text.strip()
-        except:
-            self.log.error("Failed to get text on element " + info)
+        except Exception as e:
+            self.log.error("Failed to get text on element " + info  + " | Error: " + str(e))
             print_stack()
             text = None
         return text
@@ -160,8 +160,8 @@ class SeleniumDriver():
                 self.log.info("Element not present with locator: " + locator +
                               " locatorType: " + locatorType)
                 return False
-        except:
-            print("Element not found")
+        except Exception as e:
+            self.log.error("Exception checking element presence: " + " | Error: " + str(e))
             return False
 
     def isElementDisplayed(self, locator="", locatorType="xpath", element=None):
@@ -182,8 +182,8 @@ class SeleniumDriver():
                 self.log.info("Element not displayed with locator: " + locator +
                               " locatorType: " + locatorType)
             return isDisplayed
-        except:
-            print("Element not found")
+        except Exception as e:
+            self.log.error("Exception checking element display: " + str(e))
             return False
 
     def elementPresenceCheck(self, locator, byType):
@@ -200,8 +200,8 @@ class SeleniumDriver():
                 self.log.info("Element not present with locator: " + locator +
                               " locatorType: " + str(byType))
                 return False
-        except:
-            self.log.info("Element not found")
+        except Exception as e:
+            self.log.info("Element not found: " + str(e))
             return False
 
     def waitForElement(self, locator, locatorType="xpath",
@@ -218,15 +218,12 @@ class SeleniumDriver():
                                                      ElementNotSelectableException])
             element = wait.until(EC.element_to_be_clickable((byType, locator)))
             self.log.info("Element appeared on the web page")
-        except:
-            self.log.info("Element not appeared on the web page")
+        except Exception as e:
+            self.log.error("Element did not appear on the web page | Error: " + str(e))
             print_stack()
         return element
 
     def webScroll(self, direction="up"):
-        """
-        NEW METHOD
-        """
         if direction == "up":
             # Scroll Up
             self.driver.execute_script("window.scrollBy(0, -1000);")
@@ -264,8 +261,8 @@ class SeleniumDriver():
                     break
                 self.switchToDefaultContent()
             return result
-        except:
-            print("iFrame index not found")
+        except Exception as e:
+            self.log.error("iFrame index not found | Error: " + str(e))
             return result
 
     def switchToFrame(self, id="", name ="", index=None):
@@ -303,6 +300,6 @@ class SeleniumDriver():
                 self.log.info("Element :: " + info + " is enabled")
             else:
                 self.log.info("Element :: " + info + " is not enabled")
-        except:
-            self.log.info("Element :: " + info + "state could not be found")
+        except Exception as e:
+            self.log.error("Element :: " + info + " state could not be found | Error: " + str(e))
         return enabled

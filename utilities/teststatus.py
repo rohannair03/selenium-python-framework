@@ -28,7 +28,7 @@ class TestStatus(SeleniumDriver):
             if result is not None:
                 if result:
                     self.resultList.append("PASS")
-                    self.log.error("### VERIFICATION SUCCESSFUL :: + " + resultMessage)
+                    self.log.info("### VERIFICATION SUCCESSFUL :: + " + resultMessage)
                 else:
                     self.resultList.append("FAIL")
                     self.log.error("### VERIFICATION FAILED :: + " + resultMessage)
@@ -37,9 +37,9 @@ class TestStatus(SeleniumDriver):
                 self.resultList.append("FAIL")
                 self.log.error("### VERIFICATION FAILED :: + " + resultMessage)
                 self.screenShot(resultMessage)
-        except:
+        except Exception as e:
             self.resultList.append("FAIL")
-            self.log.error("### Exception Occurred !!!")
+            self.log.error("### Exception Occurred: " + str(e))
             self.screenShot(resultMessage)
             print_stack()
 

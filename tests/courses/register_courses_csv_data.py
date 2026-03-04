@@ -4,7 +4,7 @@ import pytest
 from utilities.teststatus import TestStatus
 from pages.courses.register_courses_pages import RegisterCoursesPage
 from ddt import ddt, data, unpack
-from utilities.read_data import getCSVData
+from utilities.read_data import getCSVDataRelative
 
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
 @ddt
@@ -20,10 +20,11 @@ class RegisterCoursesTests(unittest.TestCase):
         self.nav.navigateToAllCourses()
 
     @pytest.mark.run(order=1)
-    @data(*getCSVData("C:/Users/rohan/workspace_python/letskodeit/testdata.csv"))
+    @data(*getCSVDataRelative("testdata.csv"))
     @unpack
     def test_invalidEnrollment(self, courseName, ccNum, ccExp, ccCvv):
         self.courses.enrollCourse(courses=courseName)
         self.courses.enterCardDetails(cc_num=ccNum, cc_exp=ccExp, cc_cvv=ccCvv)
         result = self.courses.verifyEnrollFailed()
-        self.ts.markFinal("test_validEnroll", result, "Enroll did not fail")
+        self.ts.markFinal("test_invalidEnrollment", result, "Enroll did not fail")
+        self.nav.navigateToAllCourses()
