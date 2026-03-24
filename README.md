@@ -74,6 +74,8 @@ This ensures consistent behavior across page objects and centralizes interaction
 - Structured logging integration
 - Cross-browser support (Chrome, Firefox)
 - Data-driven test capability
+- Allure reporting with step-level annotations
+- Automatic screenshot attachment to Allure report on failure
 
 
 ---
@@ -133,12 +135,20 @@ pytest --browser=chrome --headless
 ## Failure Diagnostics
 
 On test failure, a screenshot is automatically captured and stored in:
-
 ```text
 screenshots/
 ```
 
-This mirrors real-world CI debugging practices and provides actionable failure artifacts.
+Screenshots are also attached directly to the Allure report against the failed test, providing immediate visual context without needing to locate files manually.
+
+To generate and open the Allure report locally:
+```bash
+pytest --browser=chrome --headless --alluredir=allure-results
+allure generate allure-results -o allure-report --clean
+allure open allure-report
+```
+
+In CI, the Allure report is generated automatically after every run — including failed runs — and uploaded as a downloadable artifact in the GitHub Actions summary.
 
 
 ---
@@ -176,7 +186,7 @@ The implementation reflects production-oriented automation practices rather than
 
 - ~~CI integration (GitHub Actions)~~
 - Parallel execution with pytest-xdist
-- Structured reporting (Allure / HTML reports)
+- ~~Structured reporting (Allure / HTML reports)~~
 - Remote execution (Selenium Grid)
 - Expanded negative and edge-case coverage
 
