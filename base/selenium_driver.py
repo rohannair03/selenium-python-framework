@@ -254,7 +254,7 @@ class SeleniumDriver():
             self.log.info("Length of iframe list: ")
             self.log.info(str(len(iframe_list)))
             for i in range(len(iframe_list)):
-                self.switchToFrame(index=iframe_list[i])
+                self.driver.switch_to.frame(i)
                 result = self.isElementPresent(locator, locatorType)
                 if result:
                     self.log.info("iframe index is:")

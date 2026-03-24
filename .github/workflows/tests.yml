@@ -22,15 +22,26 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run tests (headless)
-        run: pytest --browser=chrome --headless
+      - name: Install Allure CLI
+        run: |
+          wget -qO allure.tgz https://github.com/allure-framework/allure2/releases/download/2.38.1/allure-2.38.1.tgz
+          tar -xzf allure.tgz
+          sudo mv allure-2.38.1 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
 
+      - name: Run tests (headless)
+        run: pytest --browser=chrome --headless --alluredir=allure-results
+
+      - name: Generate Allure report
+        if: always()
+        run: allure generate allure-results -o allure-report --clean
+    
       - name: Upload test report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-report
-          path: report.html
+          name: allure-report
+          path: allure-report/
 
       - name: Upload screenshots on failure
         uses: actions/upload-artifact@v4
