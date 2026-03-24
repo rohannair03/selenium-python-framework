@@ -12,4 +12,4 @@ pytest-ordering>=0.6
 pytest-html>=3.1.0
 
 # Allure testing
-allure-pytest>=2.38.1
+allure-pytest>=2.15.3
