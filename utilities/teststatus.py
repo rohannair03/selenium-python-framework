@@ -11,6 +11,7 @@ import utilities.custom_logger as cl
 import logging
 from base.selenium_driver import SeleniumDriver
 from traceback import print_stack
+import allure
 
 class TestStatus(SeleniumDriver):
 
@@ -32,15 +33,21 @@ class TestStatus(SeleniumDriver):
                 else:
                     self.resultList.append("FAIL")
                     self.log.error("### VERIFICATION FAILED :: + " + resultMessage)
-                    self.screenShot(resultMessage)
+                    destinationFile = self.screenShot(resultMessage)
+                    if destinationFile is not None:
+                        allure.attach.file(destinationFile, resultMessage, allure.attachment_type.PNG)
             else:
                 self.resultList.append("FAIL")
                 self.log.error("### VERIFICATION FAILED :: + " + resultMessage)
-                self.screenShot(resultMessage)
+                destinationFile = self.screenShot(resultMessage)
+                if destinationFile is not None:
+                    allure.attach.file(destinationFile, resultMessage, allure.attachment_type.PNG)
         except Exception as e:
             self.resultList.append("FAIL")
             self.log.error("### Exception Occurred: " + str(e))
-            self.screenShot(resultMessage)
+            destinationFile = self.screenShot(resultMessage)
+            if destinationFile is not None:
+                allure.attach.file(destinationFile, resultMessage, allure.attachment_type.PNG)
             print_stack()
 
     def mark(self, result, resultMessage):

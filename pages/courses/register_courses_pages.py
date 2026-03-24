@@ -1,6 +1,7 @@
 import utilities.custom_logger as cl
 import logging
 from base.basepage import BasePage
+import allure
 
 class RegisterCoursesPage(BasePage):
 
@@ -23,42 +24,53 @@ class RegisterCoursesPage(BasePage):
     _submit_enroll = "//button[@class='zen-subscribe sp-buy btn btn-default btn-lg btn-block btn-gtw btn-submit checkout-button dynamic-button']"
     _enroll_error_message = "//span[normalize-space()='Your card number is invalid.']"
 
+    @allure.step("Click All Courses Link")
     def clickCoursesLink(self):
         self.elementClick(locator=self._all_courses_link, locatorType="xpath")
 
+    @allure.step("Search for course: {courses}")
     def clickSearch(self, courses):
         self.sendKeys(courses, locator=self._search_box, locatorType="xpath")
 
+    @allure.step("Click Search Button")
     def clickSearchCourses(self):
         self.elementClick(locator=self._search, locatorType="xpath")
 
+    @allure.step("Click course: {course}")
     def clickCourse(self, course):
         self.elementClick(locator=self._found_course.format(course), locatorType="xpath")
 
+    @allure.step("Click Enroll Button")
     def clickEnroll(self):
         self.elementClick(locator=self._enroll_button, locatorType="xpath")
 
+    @allure.step("Scroll Down")
     def scrollDown(self):
         self.webScroll("down")
 
+    @allure.step("Enter Card Number")
     def enterCardNum(self, cc_num):
         self.SwitchFrameByIndex(self._cc_num, locatorType="xpath")
         self.sendKeys(cc_num, locator=self._cc_num, locatorType="xpath")
         self.switchToDefaultContent()
 
+    @allure.step("Enter Card Expiry")
     def enterCardExp(self, cc_exp):
         self.SwitchFrameByIndex(self._cc_exp, locatorType="xpath")
         self.sendKeys(cc_exp, locator=self._cc_exp, locatorType="xpath")
         self.switchToDefaultContent()
 
+    @allure.step("Enter Card CVV")
     def enterCardCVV(self, cc_cvv):
         self.SwitchFrameByIndex(self._cc_cvv, locatorType="xpath")
         self.sendKeys(cc_cvv, locator=self._cc_cvv, locatorType="xpath")
         self.switchToDefaultContent()
 
+    @allure.step("Click Enroll Submit Button")
     def clickEnrollSubmitButton(self):
         self.elementClick(locator=self._submit_enroll, locatorType="xpath")
 
+    @allure.step("Enroll in Course: {courses}")
     def enrollCourse(self, courses=""):
         self.clickCoursesLink()
         self.clickSearch(courses)
@@ -67,11 +79,13 @@ class RegisterCoursesPage(BasePage):
         self.clickEnroll()
         self.scrollDown()
 
+    @allure.step("Enter Card Details")
     def enterCardDetails(self, cc_num="", cc_exp="", cc_cvv=""):
         self.enterCardNum(cc_num=cc_num)
         self.enterCardExp(cc_exp=cc_exp)
         self.enterCardCVV(cc_cvv=cc_cvv)
 
+    @allure.step("Verify Enroll Failed")
     def verifyEnrollFailed(self):
         result = self.isElementPresent(locator=self._enroll_error_message, locatorType="xpath")
         return result
