@@ -13,7 +13,7 @@ class RegisterCoursesTests(unittest.TestCase):
     def classSetup(self, oneTimeSetUp):
         self.courses = RegisterCoursesPage(self.driver)
         self.ts = TestStatus(self.driver)
-        self.nav = NavigationPage(self.diriver)
+        self.nav = NavigationPage(self.driver)
 
     @pytest.mark.run(order=1)
     @data(("JavaScript", "4538 2635 6429 4014", "0827", "647"), ("Python 3", "1010", "6729", "999"))
