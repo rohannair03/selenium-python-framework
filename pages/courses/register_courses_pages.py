@@ -38,10 +38,12 @@ class RegisterCoursesPage(BasePage):
 
     @allure.step("Click course: {course}")
     def clickCourse(self, course):
+        self.waitForElement(locator=self._found_course.format(course), locatorType="xpath", timeout=20)
         self.elementClick(locator=self._found_course.format(course), locatorType="xpath")
 
     @allure.step("Click Enroll Button")
     def clickEnroll(self):
+        self.waitForElement(locator=self._enroll_button, locatorType="xpath", timeout=20)
         self.elementClick(locator=self._enroll_button, locatorType="xpath")
 
     @allure.step("Scroll Down")
